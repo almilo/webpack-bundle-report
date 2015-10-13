@@ -1,6 +1,6 @@
 {
   "name": "webpack-bundle-report",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Reporting tool to analyse Webpack bundles",
   "main": "index.js",
   "bin": {
