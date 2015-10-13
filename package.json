@@ -1,0 +1,24 @@
+{
+  "name": "webpack-bundle-report",
+  "version": "0.0.0",
+  "description": "Reporting tool to analyse Webpack bundles",
+  "main": "index.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/almilo/webpack-bundle-report.git"
+  },
+  "keywords": [
+    "webpack",
+    "bundle",
+    "report",
+    "analysis"
+  ],
+  "author": "Alberto Mijares <almilo@almilo.es>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/almilo/webpack-bundle-report/issues"
+  },
+  "homepage": "https://github.com/almilo/webpack-bundle-report#readme"
+}
