@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "description": "Reporting tool to analyse Webpack bundles",
   "main": "index.js",
-  "scripts": {
+  "bin": {
+    "wbr": "cli.js"
   },
   "repository": {
     "type": "git",
@@ -20,5 +21,10 @@
   "bugs": {
     "url": "https://github.com/almilo/webpack-bundle-report/issues"
   },
-  "homepage": "https://github.com/almilo/webpack-bundle-report#readme"
+  "homepage": "https://github.com/almilo/webpack-bundle-report#readme",
+  "dependencies": {
+    "cli-table": "^0.3.1",
+    "lodash": "^3.10.1",
+    "webpack": "^1.12.2"
+  }
 }
