@@ -1,16 +1,25 @@
 var path = require('path'), _ = require('lodash'), webpack = require('webpack'), Table = require('cli-table');
 
-module.exports = function (webpackConfiguration, callback) {
+module.exports = function bundle(webpackConfiguration, callback) {
     webpack(webpackConfiguration, function (error, stats) {
         if (error) {
             callback(error);
         } else {
-            var asJsonStats = stats.toJson(),
-                report = showAssetTypesAndSizes(asJsonStats) + '\n' + showModuleNamesAndSizes(asJsonStats);
-
-            callback(undefined, report);
+            analyse(stats.toJson(), callback);
         }
     });
+};
+
+module.exports.analyse = analyse;
+
+function analyse(jsonStats, callback) {
+    try {
+        var report = showAssetTypesAndSizes(jsonStats) + '\n' + showModuleNamesAndSizes(jsonStats);
+
+        callback(undefined, report);
+    } catch (error) {
+        callback(error);
+    }
 
     function showAssetTypesAndSizes(jsonStats) {
         var assetsTable = new Table({head: ['Asset type (number)', 'Size'], colWidths: [133, 10]}),
@@ -77,4 +86,4 @@ module.exports = function (webpackConfiguration, callback) {
     function sumSize(accumulator, item) {
         return accumulator + item.size;
     }
-};
+}

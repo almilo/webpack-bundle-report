@@ -28,4 +28,6 @@ webpackBundleReport(webpackConfiguration, function (error, report) {
 
 ```
 wrb webpack.config.js > report.txt
+
+wrb [--stats|-s] stats.json > report.txt
 ```
