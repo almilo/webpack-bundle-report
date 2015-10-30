@@ -14,7 +14,10 @@ module.exports.analyse = analyse;
 
 function analyse(jsonStats, callback) {
     try {
-        var report = showAssetTypesAndSizes(jsonStats) + '\n' + showModuleNamesAndSizes(jsonStats);
+        var report =
+            showAssetTypesAndSizes(jsonStats) + '\n' +
+            showCriticalAssetsNamesAndSizes(jsonStats, ['.js', '.css']) + '\n' +
+            showModuleNamesAndSizes(jsonStats);
 
         callback(undefined, report);
     } catch (error) {
@@ -47,6 +50,38 @@ function analyse(jsonStats, callback) {
         assetsTable.push(['Total assets size', padNumber(totalAssetsSize)]);
 
         return assetsTable.toString();
+    }
+
+    function showCriticalAssetsNamesAndSizes(jsonStats, criticalAssetExtensions) {
+        var criticalAssetsTable = new Table({head: ['Asset name', 'Size'], colWidths: [133, 10]}),
+            criticalAssetsNamesAndSizes = _.chain(jsonStats.assets)
+                .filter(function (asset) {
+                    var assetExtension = path.extname(asset.name);
+
+                    return criticalAssetExtensions.indexOf(assetExtension) >= 0;
+                })
+                .map(function (asset) {
+                    return {name: asset.name, size: asset.size};
+                })
+                .sort(function (assetNameAndSize1, assetNameAndSize2) {
+                    var asset1Extension = path.extname(assetNameAndSize1.name),
+                        asset2Extension = path.extname(assetNameAndSize2.name);
+
+                    if (asset1Extension === asset2Extension) {
+                        return assetNameAndSize2.size - assetNameAndSize1.size;
+                    } else if (asset1Extension < asset2Extension) {
+                        return 1
+                    } else {
+                        return -1;
+                    }
+                })
+                .value();
+
+        criticalAssetsNamesAndSizes.forEach(function (assetNameAndSize) {
+            criticalAssetsTable.push(['"' + assetNameAndSize.name + '"', padNumber(assetNameAndSize.size)]);
+        });
+
+        return criticalAssetsTable.toString();
     }
 
     function showModuleNamesAndSizes(jsonStats) {
