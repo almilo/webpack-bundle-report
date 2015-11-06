@@ -27,7 +27,7 @@ webpackBundleReport(webpackConfiguration, function (error, report) {
 ## Usage from CLI:
 
 ```
-wrb webpack.config.js > report.txt
+wbr webpack.config.js > report.txt
 
-wrb [--stats|-s] stats.json > report.txt
+wbr [--stats|-s] stats.json > report.txt
 ```
